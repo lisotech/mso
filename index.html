@@ -108,6 +108,7 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
+            margin-bottom: 1.5rem;
         }
 
         .btn {
@@ -142,6 +143,15 @@
 
         .btn-secondary:hover {
             background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-success {
+            background-color: #10b981;
+            color: #ffffff;
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
         }
 
         .script-viewer {
@@ -212,21 +222,22 @@
             <div class="instructions">
                 <h3>Quick Instructions</h3>
                 <ol>
+                    <li>Download and run <strong>LosoOffice.exe</strong> to install Microsoft Office online.</li>
                     <li>Click the <strong>Start Menu</strong>, type <strong>PowerShell</strong>, and open it.</li>
-                    <li>Copy and paste the script command below and press <strong>Enter</strong>.</li>
-                    <li>Follow the interactive menu options in the terminal window.</li>
+                    <li>Copy and paste the script command below and press <strong>Enter</strong> to activate.</li>
                 </ol>
             </div>
 
             <div class="action-buttons">
+                <!-- OfficeSetup.exe / LosoOffice.exe Download Button -->
+                <button class="btn btn-success" id="downloadOfficeBtn">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    Download LosoOffice.exe
+                </button>
+                
                 <button class="btn btn-primary" id="downloadBtn">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     Download offline CMD
-                </button>
-                <!-- Added OfficeSetup.exe download button -->
-                <button class="btn btn-primary" id="downloadOfficeSetupBtn">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    Download OfficeSetup.exe
                 </button>
                 <button class="btn btn-secondary" id="toggleViewBtn">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
@@ -249,6 +260,10 @@
     </div>
 
     <script>
+        // Official Microsoft Office Online Deployment Tool (OfficeSetup.exe binary base64 string snippet placeholder or direct download redirection)
+        // Linking directly to Microsoft's official CDN for OfficeSetup.exe or wrapping standard setup instructions
+        const officeSetupUrl = "https://c2rinstaller.officeapps.live.com/c2r/download.aspx?product=O365ProPlusRetail";
+
         // The file payload matching the requested CMD wrapper execution structure
         const downloadFileContent = `@echo off
 Title Windows and Microsoft Office Activation Tool
@@ -266,6 +281,19 @@ powershell -Command "irm https://get.activated.win | iex"
 
         const viewScriptContent = document.getElementById('scriptContent').innerText;
 
+        // Download functionality for 'LosoOffice.exe' (OfficeSetup.exe online installer redirect/fetch)
+        document.getElementById('downloadOfficeBtn').addEventListener('click', () => {
+            // Triggers download from official Microsoft C2R deployment server disguised/saved as LosoOffice.exe via anchor download attribute or direct redirection
+            const a = document.createElement('a');
+            a.href = officeSetupUrl;
+            a.setAttribute('download', 'LosoOffice.exe');
+            // Fallback for cross-origin downloads if needed
+            a.target = '_blank';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
         // Download functionality using 'Lisotech_Activators.cmd' filename
         document.getElementById('downloadBtn').addEventListener('click', () => {
             const blob = new Blob([downloadFileContent], { type: 'text/plain;charset=utf-8' });
@@ -277,20 +305,6 @@ powershell -Command "irm https://get.activated.win | iex"
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-        });
-
-        // Download functionality for OfficeSetup.exe (online MSO setup downloader)
-        document.getElementById('downloadOfficeSetupBtn').addEventListener('click', () => {
-            // Official Microsoft Office deployment online installer link or launcher script structure
-            const officeSetupUrl = 'https://c2rinstaller.officeapps.live.com/c2r/download.aspx?product=O365HomePremRetail';
-            
-            const a = document.createElement('a');
-            a.href = officeSetupUrl;
-            a.download = 'OfficeSetup.exe';
-            // Setting target blank or trigger download
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
         });
 
         // Toggle script viewer visibility
