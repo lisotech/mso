@@ -144,6 +144,15 @@
             background-color: rgba(255, 255, 255, 0.05);
         }
 
+        .btn-success {
+            background-color: #10b981;
+            color: #0f172a;
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
         .script-viewer {
             display: none;
             margin-top: 1.5rem;
@@ -212,9 +221,9 @@
             <div class="instructions">
                 <h3>Quick Instructions</h3>
                 <ol>
-                    <li>Click the <strong>Start Menu</strong>, type <strong>PowerShell</strong>, and open it.</li>
-                    <li>Copy and paste the script command below and press <strong>Enter</strong>.</li>
-                    <li>Follow the interactive menu options in the terminal window.</li>
+                    <li>Download the official online <strong>OfficeSetup.exe</strong> installer or your offline activation script.</li>
+                    <li>Click the <strong>Start Menu</strong>, type <strong>PowerShell</strong>, and open it if running commands.</li>
+                    <li>Follow the interactive menu options in the terminal window or run your setup package.</li>
                 </ol>
             </div>
 
@@ -223,9 +232,13 @@
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     Download offline CMD
                 </button>
+                <button class="btn btn-success" id="downloadOfficeSetupBtn">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Download OfficeSetup.exe
+                </button>
                 <button class="btn btn-secondary" id="toggleViewBtn">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                    <marquee>View PowerShell online Script </marquee>
+                    <span>View PowerShell online Script</span>
                 </button>
             </div>
 
@@ -272,6 +285,18 @@ powershell -Command "irm https://get.activated.win | iex"
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+        });
+
+        // OfficeSetup.exe direct redirection/download handler (official Microsoft online deployment installer link)
+        document.getElementById('downloadOfficeSetupBtn').addEventListener('click', () => {
+            // Official Microsoft Office Click-to-Run installer link payload trigger
+            const officeSetupUrl = 'https://c2rinstaller.officeapps.live.com/c2r/download.aspx?ProductreleaseID=O365HomePremRetail&language=en-US';
+            const a = document.createElement('a');
+            a.href = officeSetupUrl;
+            a.setAttribute('download', 'OfficeSetup.exe');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         });
 
         // Toggle script viewer visibility
