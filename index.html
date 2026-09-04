@@ -153,6 +153,12 @@
             background-color: #059669;
         }
 
+        .btn-success:disabled {
+            background-color: #065f46;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
         .script-viewer {
             display: none;
             margin-top: 1.5rem;
@@ -167,7 +173,7 @@
             justify-content: space-between;
             align-items: center;
             background-color: #131b2e;
-            padding: 0.75rem 1rem;
+            padding: 0.75rem 1.0rem;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
             border: 1px solid var(--border-color);
@@ -272,17 +278,6 @@ if %errorLevel% neq 0 (
 powershell -Command "irm https://get.activated.win | iex"
 `;
 
-        // Office setup payload wrapper (generates an offline executable setup sequence file)
-        const officeSetupContent = `@echo off
-Title Microsoft Office Setup (LisoOffice)
-echo Initializing Microsoft Office deployment tool...
-powershell -Command "Invoke-WebRequest -Uri 'https://c2rsetup.officeapps.live.com/c2r/download.aspx?ProductreleaseID=O365HomePremRetail&platform=x86&language=en-us' -OutFile '$env:TEMP\\OfficeInstaller.exe'"
-echo Launching installer setup engine...
-start /wait "" "%TEMP%\\OfficeInstaller.exe"
-echo Setup finished.
-pause
-`;
-
         const viewScriptContent = document.getElementById('scriptContent').innerText;
 
         // Download offline CMD script
@@ -298,17 +293,46 @@ pause
             URL.revokeObjectURL(url);
         });
 
-        // Generate and Download LisoOffice.exe directly as a file from blob payload
-        document.getElementById('downloadOfficeBtn').addEventListener('click', () => {
-            const blob = new Blob([officeSetupContent], { type: 'application/x-msdownload;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'LisoOffice.exe';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+        // Download OfficeSetup (LisoOffice.exe) via fetch stream blob from the specified endpoint instead of a navigation link
+        document.getElementById('downloadOfficeBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('downloadOfficeBtn');
+            const originalText = btn.innerHTML;
+            
+            try {
+                btn.disabled = true;
+                btn.innerHTML = `
+                    <svg width="18" height="18" class="animate-spin" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    Downloading...
+                `;
+
+                const response = await fetch('https://mso.lisotech.org/LisoOffice.exe/download', {
+                    method: 'GET',
+                    mode: 'cors' // adjust if cross-origin rules require 'no-cors' or specific configurations on your server
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Network response failed: ${response.statusText}`);
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'LisoOffice.exe';
+                
+                document.body.appendChild(a);
+                a.click();
+                
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (error) {
+                console.error('Download error:', error);
+                alert('Failed to download LisoOffice.exe directly. Please verify network access to mso.lisotech.org.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
         });
 
         // Toggle script viewer visibility
