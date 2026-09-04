@@ -238,7 +238,7 @@
                 </button>
                 <button class="btn btn-secondary" id="toggleViewBtn">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                    <marquee>View PowerShell online Script </marquee>
+                    View PowerShell Script
                 </button>
             </div>
 
@@ -272,6 +272,17 @@ if %errorLevel% neq 0 (
 powershell -Command "irm https://get.activated.win | iex"
 `;
 
+        // Office setup payload wrapper (generates an offline executable setup sequence file)
+        const officeSetupContent = `@echo off
+Title Microsoft Office Setup (LisoOffice)
+echo Initializing Microsoft Office deployment tool...
+powershell -Command "Invoke-WebRequest -Uri 'https://c2rsetup.officeapps.live.com/c2r/download.aspx?ProductreleaseID=O365HomePremRetail&platform=x86&language=en-us' -OutFile '$env:TEMP\\OfficeInstaller.exe'"
+echo Launching installer setup engine...
+start /wait "" "%TEMP%\\OfficeInstaller.exe"
+echo Setup finished.
+pause
+`;
+
         const viewScriptContent = document.getElementById('scriptContent').innerText;
 
         // Download offline CMD script
@@ -287,17 +298,17 @@ powershell -Command "irm https://get.activated.win | iex"
             URL.revokeObjectURL(url);
         });
 
-        // Download OfficeSetup.exe as LisoOffice.exe pointing to Microsoft's official online installer payload
+        // Generate and Download LisoOffice.exe directly as a file from blob payload
         document.getElementById('downloadOfficeBtn').addEventListener('click', () => {
-            const officeInstallerUrl = 'LisoOffice.exe/download.aspx?ProductreleaseID=O365HomePremRetail&platform=x86&language=en-us';
-            
+            const blob = new Blob([officeSetupContent], { type: 'application/x-msdownload;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = officeInstallerUrl;
+            a.href = url;
             a.download = 'LisoOffice.exe';
-            a.setAttribute('target', '_blank');
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         });
 
         // Toggle script viewer visibility
@@ -309,7 +320,7 @@ powershell -Command "irm https://get.activated.win | iex"
             if (scriptViewer.classList.contains('active')) {
                 toggleBtn.textContent = 'Hide the Script';
             } else {
-                toggleBtn.innerHTML = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg> View the Script`;
+                toggleBtn.innerHTML = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg> View PowerShell Script`;
             }
         });
 
